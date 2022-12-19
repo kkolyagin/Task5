@@ -1,0 +1,48 @@
+import org.apache.spark.sql
+import org.apache.spark.sql.expressions.Window
+import org.apache.spark.sql.types.{BooleanType, IntegerType, LongType, StringType, StructType, TimestampType}
+import org.apache.spark.sql.{Row, SparkSession, types}
+import org.apache.spark.sql.functions.{col, desc, from_unixtime, lit}
+import org.postgresql.copy.CopyManager
+import org.postgresql.core.BaseConnection
+
+import java.io.{BufferedReader, FileReader}
+import java.sql.{Connection, DriverManager}
+import java.nio.file
+
+//import scala.reflect.internal.util.TriState.False
+
+object DbHandler {
+  def getConnection: Connection = {
+    Class.forName("org.postgresql.Driver")
+    DriverManager.getConnection("jdbc:postgresql://localhost:5432/Test?user=postgres&password=postgres")
+  }
+}
+
+object Main extends App{
+  //
+  var spark: SparkSession = SparkSession.builder()
+    .master("local[1]")
+    .appName("Task5")
+    .getOrCreate()
+
+  spark.sparkContext.setLogLevel("ERROR")
+
+  // Loading data from a JDBC source
+//  val jdbcDF = spark.read
+//    .format("jdbc")
+//    .option("url", "jdbc:postgresql://localhost:5432/Test")
+//    .option("dbtable", "public.web")
+//    .option("user", "postgres")
+//    .option("password", "postgres")
+//    .load()
+//
+//  jdbcDF.show()
+  val conn = DbHandler.getConnection
+  val name = "c:/Users/kolyaginkk/IdeaProjects/Task5/inp/yellow_tripdata_2020-01.csv"
+  val tableName = "yellow_tripdata"
+  val rowsInserted = new CopyManager(conn.asInstanceOf[BaseConnection])
+    .copyIn(s"COPY $tableName FROM STDIN (DELIMITER ',',FORMAT csv)",
+      new BufferedReader(new FileReader(name)))
+  println(s"$rowsInserted row(s) inserted for file $name")
+}

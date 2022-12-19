@@ -1,0 +1,15 @@
+ThisBuild / version := "0.1.0-SNAPSHOT"
+
+ThisBuild / scalaVersion := "2.11.8"
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "Task5"
+  )
+
+libraryDependencies ++=Seq(
+  "org.apache.spark" %% "spark-core" % "2.3.2",
+  "org.apache.spark" %% "spark-sql" % "2.3.2"
+)
+// https://mvnrepository.com/artifact/org.postgresql/postgresql
+libraryDependencies += "org.postgresql" % "postgresql" % "42.5.1"
