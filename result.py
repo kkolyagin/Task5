@@ -1,3 +1,43 @@
+from pyspark import SparkConf, SparkContext
+from pyspark.sql import SparkSession
+conf = SparkConf()
+conf.setMaster("local").setAppName('My app')
+conf.set("spark.jars","c:\Scripts\spark-3.3.1-bin-hadoop3\jars\postgresql-42.5.1.jar")
+sc = SparkContext.getOrCreate(conf=conf)
+spark = SparkSession(sc)
+print('Запущен Spark версии', spark.version)
+
+import pyspark.sql.types as T
+import pyspark.sql.functions as F
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import udf
+from pyspark.sql.window import Window
+
+import datetime
+
+spark = SparkSession.builder.master("local").\
+                    appName("Word Count").\
+                    config("spark.driver.bindAddress","localhost").\
+                    config("spark.ui.port","4040").\
+                    getOrCreate()
+
+#### creds info
+url = "jdbc:postgresql://localhost:5432/Test"
+db_name = "public"
+creds = {
+    "user": "postgres",
+    "password": "postgres",
+    "driver": "org.postgresql.Driver"
+}
+
+df=spark.read\
+  .format("jdbc")\
+  .option("url", url)\
+  .option("dbtable", "(SELECT date(tpep_pickup_datetime) as date, passenger_count, Total_amount FROM public.yellow_tripdata LIMIT 1000000) AS t")\
+  .option("user", "postgres")\
+  .option("password", "postgres")\
+  .load()   
+
 df\
     .fillna(value=0, subset=["passenger_count"])\
     .withColumn("passenger_type",\
