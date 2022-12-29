@@ -2,7 +2,8 @@ version: '3.8'
 services:
    db:
     image: postgres:latest
-    restart: always
+    hostname: postgres
+    restart: always	
     ports:
       - 5432:5432
     volumes:
@@ -20,7 +21,6 @@ services:
     volumes:
       - ./datasources/postgres.yml:/etc/grafana/provisioning/datasources/postgres.yml
       - ./grafana:/var/lib/grafana
-    env_file: environment/.gfenv
 volumes:
   grafana:
     driver: local

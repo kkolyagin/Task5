@@ -49,42 +49,41 @@ object Main extends App {
     var count: Int = 0;
     var part: Int = 0;
 
-    lines.foreach(l => {
-      if (count == 0) {
-        h_rec = null
-        h_rec = l.split(",").toList
-        sqlStr += s" (${h_rec(0)},${h_rec(1)},${h_rec(2)},${h_rec(3)},${h_rec(4)},${h_rec(5)},${h_rec(6)}," +
-          s"${h_rec(7)},${h_rec(8)},${h_rec(9)},${h_rec(10)},${h_rec(11)},${h_rec(12)},${h_rec(13)}," +
-          s"${h_rec(14)},${h_rec(15)},${h_rec(16)},${h_rec(17)}) values "
-        sqlStr1 = sqlStr
-      }
-      else {
-        data_rec = null
-        data_rec = l.split(",").toList
-        sqlStr1 += s"(${data_rec(0)},'${data_rec(1)}','${data_rec(2)}',${data_rec(3)},${data_rec(4)},${data_rec(5)},'${data_rec(6)}'," +
-          s"${data_rec(7)},${data_rec(8)},${data_rec(9)},${data_rec(10)},${data_rec(11)},${data_rec(12)},${data_rec(13)}," +
-          s"${data_rec(14)},${data_rec(15)},${data_rec(16)},${data_rec(17)}),"
-        part += 1
-        if ((part == 10000) || (lines.hasNext==false)) {
-          sqlStr1 = sqlStr1.stripSuffix(",")
-          //println(sqlStr1)
-          // do database insert
-          val conn = DbHandler.getConnection
-          try {
-            val prep = conn.prepareStatement(sqlStr1)
-            prep.executeUpdate
+    val conn = DbHandler.getConnection
+    try {
+      lines
+        .foreach(l => {
+          if (count == 0) {
+            h_rec = null
+            h_rec = l.split(",").toList
+            sqlStr += s" (${h_rec(0)},${h_rec(1)},${h_rec(2)},${h_rec(3)},${h_rec(4)},${h_rec(5)},${h_rec(6)}," +
+              s"${h_rec(7)},${h_rec(8)},${h_rec(9)},${h_rec(10)},${h_rec(11)},${h_rec(12)},${h_rec(13)}," +
+              s"${h_rec(14)},${h_rec(15)},${h_rec(16)},${h_rec(17)}) values "
+            sqlStr1 = sqlStr
           }
-          finally {
-            conn.close
+          else {
+            data_rec = null
+            data_rec = l.split(",").toList
+            sqlStr1 += s"('${data_rec(0)}','${data_rec(1)}','${data_rec(2)}','${data_rec(3)}','${data_rec(4)}','${data_rec(5)}','${data_rec(6)}'," +
+              s"'${data_rec(7)}','${data_rec(8)}','${data_rec(9)}','${data_rec(10)}','${data_rec(11)}','${data_rec(12)}','${data_rec(13)}'," +
+              s"'${data_rec(14)}','${data_rec(15)}','${data_rec(16)}','${data_rec(17)}'),"
+            part += 1
+            if ((part == 10000) || (lines.hasNext == false)) {
+              sqlStr1 = sqlStr1.stripSuffix(",").replace("''", "null")
+              // do database insert
+              conn.prepareStatement(sqlStr1).executeUpdate
+
+              sqlStr1 = sqlStr
+              part = 0
+              println(count)
+            }
           }
-          sqlStr1 = sqlStr
-          part = 0
-          println(count)
-        }
-        //if (count==100000) break
-      }
-      count += 1
-    })
+          count += 1
+        })
+    }
+    finally {
+      conn.close
+    }
   }
 
   def MakeParquet {
