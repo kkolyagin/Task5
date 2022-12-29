@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+   db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./datasources/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file: environment/.tsenv
+   grafana:
+    image: grafana/grafana-oss
+    depends_on:
+       - db 
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    user: '104'
+    volumes:
+      - ./datasources/postgres.yml:/etc/grafana/provisioning/datasources/postgres.yml
+      - ./grafana:/var/lib/grafana
+    env_file: environment/.gfenv
+volumes:
+  grafana:
+    driver: local
+  db:
+    driver: local
