@@ -1,13 +1,12 @@
 <br/>
 <p align="center">
-  <a href="https://github.com/Колягин Константин/">
+  <a href="https://github.com/kkolyagin">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Итоговая задача 5  курса "Инженер данных"</h3>
 
 </p>
-
 
 
 ## Содержание
@@ -20,11 +19,8 @@
 * [Usage](#usage)
 * [Contributing](#contributing)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
 
 ## О проекте
-
-![Screen Shot](images/screenshot.png)
 
 Проект № 5.
 
@@ -125,9 +121,3 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Authors
 
 * **Колягин Константин** - ** - [Колягин Константин](https://github.com/kkolyagin) - **
-
-## Acknowledgements
-
-* []()
-* []()
-* []()

@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  <a href="https://github.com/Колягин Константин/">
+  <a href="https://github.com/kkolyagin">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -9,10 +9,9 @@
 </p>
 
 
-
 ## Содержание
 
-* [О проекте](#about-the-project)
+* [О проекте](#О-проекте)
 * [Built With](#built-with)
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
@@ -22,8 +21,6 @@
 * [Authors](#authors)
 
 ## О проекте
-
-![Screen Shot](images/screenshot.png)
 
 Проект № 5.
 
