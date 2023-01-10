@@ -46,7 +46,7 @@ Improvement_surchange | Доплата за страховку
 Total_amount | Полная стоимость поездки
 Congestion_surchange | Дополнительный сбор 
 
-**Источник:** https://disk.yandex.ru/d/DKeoopbGH1Ttuw
+**Источник:** https://cloud.mail.ru/public/nyaH/TwyXvANZP
 
 Необходимо, используя таблицу поездок для каждого дня рассчитать процент поездок по количеству человек в машине (без пассажиров, 1, 2,3,4 и более пассажиров). По итогу должна получиться таблица (parquet) с колонками date, percentage_zero, percentage_1p, percentage_2p, percentage_3p, percentage_4p_plus. Технологический стек – sql,scala (что-то одно).
 Также добавить столбцы к предыдущим результатам с самой дорогой и самой дешевой поездкой для каждой группы.
@@ -69,7 +69,7 @@ git clone https://github.com/kkolyagin/Task5.git
 *Назначение основных файлов и папок:*
 |Папка/файл|Описание|
 |----------|--------|
-.\inp\yellow_tripdata_2020-01.csv|файл для загрузки в БД. скачать https://disk.yandex.ru/d/DKeoopbGH1Ttuw
+.\inp\yellow_tripdata_2020-01.csv|файл для загрузки в БД. скачать https://cloud.mail.ru/public/nyaH/TwyXvANZP
 .\postgres_grafana|папка докера с Postgres и Grafana
 .\postgres_grafana\datasources\init.sql|SQL скрипт создания таблиц yellow_tripdata, parquet в Postgres
 .\postgres_grafana\datasources\postgres.yml|создает источник данных Postgres в Grafana 
@@ -96,7 +96,7 @@ IntelliJ IDEA 2022.2.3 (https://www.jetbrains.com/idea/)
 docker-compose up -d
 ```
 
-3. Создать каталог inp и поместить туда файл из https://disk.yandex.ru/d/DKeoopbGH1Ttu
+3. Создать каталог inp и поместить туда файл из https://cloud.mail.ru/public/nyaH/TwyXvANZP
 
 4. Запустить IntelliJ IDEA, открыть проект и запустить на исполение 
 
